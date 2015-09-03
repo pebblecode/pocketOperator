@@ -56,10 +56,10 @@ function draw(){
 	var render = function () {
 		requestAnimationFrame( render );
 		
-		console.log(offset);
-		if( offset!=false ){
-			console.log("event");
-		}
+		//console.log(offset);
+		// if( offset!=false ){
+		// 	console.log("event");
+		// }
 
 		color = 0;
 		for (i = 0 ; i < 100 ; i++){
