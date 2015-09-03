@@ -53,39 +53,35 @@ function draw(eventProducer){
 	camera.position.z = 5;
 
     var zOffset = [];
+    var offset = [];
+
+    for ( i = 0 ; i < 10000 ; i++){
+        zOffset[i] = Math.floor(Math.random() * (200 - 0)) + 0;
+    }
 
     eventProducer.subscribe(function(onNext){
-      var offset = [];
-      for ( i = 0 ; i < 10000 ; i++){
-          zOffset[i] = Math.floor(Math.random() * (200 - 0)) + 0;
-      }
-      //zOffset = offset[0];
+        //cube[count].position.z = zOffset[count];
+        var color = Math.floor(Math.random() * (14 - 0) + 0);
+        cube[0].material.color.setHex( '0x'+colors[color]);	      	
 
     },undefined, undefined);
 
 	var render = function () {
 		requestAnimationFrame( render );
 		
-
 		
 		var spacingMultiplier =  (Math.random() * (1.1 - 1)) + 1;
-		console.log(spacingMultiplier);
 		var colorChangeDeterminer = Math.floor(Math.random() * (100 - 0)) + 0;
 
 
 		count = 0;
 		for (i = -50 ; i < 50 ; i++){
 			for(j = -50; j < 50 ; j++){
-				cube[count].position.x = i*spacingMultiplier;
-				cube[count].position.y = j*spacingMultiplier;
+				//cube[count].position.x = i*spacingMultiplier;
+				//cube[count].position.y = j*spacingMultiplier;
 				cube[count].rotation.x += 0.05;
 				cube[count].rotation.y += 0.05;
         
-        if(colorChangeDeterminer === 99){
-        	cube[count].position.z = zOffset[count];
-					color = Math.floor(Math.random() * (14 - 0)) + 0;
-        	cube[count].material.color.setHex( '0x'+colors[color]);	      	
-        }
 
         count++;			
 			}
