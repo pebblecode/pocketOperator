@@ -23,7 +23,7 @@ function draw(eventProducer){
 
 	var scheme = new ColorScheme;
 	scheme.from_hue(21)         // Start the scheme 
-	      .scheme('triade')     // Use the 'triade' scheme, that is, colors
+	      .scheme('tetrade')     // Use the 'triade' scheme, that is, colors
 	                            // selected from 3 points equidistant around
 	                            // the color wheel.
 	      .variation('soft');   // Use the 'soft' color variation
@@ -37,12 +37,12 @@ function draw(eventProducer){
 	cube = [];
 	count = 0;
 
-
-	for ( i = -5 ; i < 5 ; i ++ ){
-		for ( j = -5 ; j < 5 ; j++){
+	for ( i = -50 ; i < 50 ; i ++ ){
+		for ( j = -50 ; j < 50 ; j++){
 			cube[count] = new THREE.Mesh( geometry, material );
 			cube[count].position.x = i;
 			cube[count].position.y = j;
+			cube[count].position.z = Math.floor(Math.random() * (200 - 0)) + 0;
 			scene.add( cube[count] );
 			count++;			
 		}
@@ -52,14 +52,14 @@ function draw(eventProducer){
 
 	camera.position.z = 5;
 
-    var zOffset = 0;
+    var zOffset = [];
 
     eventProducer.subscribe(function(onNext){
       var offset = [];
-      for ( i = 0 ; i < 100 ; i++){
-          offset[i] = Math.floor(Math.random() * (10 - 0)) + 0;
+      for ( i = 0 ; i < 10000 ; i++){
+          zOffset[i] = Math.floor(Math.random() * (200 - 0)) + 0;
       }
-      zOffset = offset[0];
+      //zOffset = offset[0];
 
     },undefined, undefined);
 
@@ -67,16 +67,34 @@ function draw(eventProducer){
 		requestAnimationFrame( render );
 		
 
-		color = 0;
-		for (i = 0 ; i < 100 ; i++){
-			cube[i].rotation.x += 0.05;
-			cube[i].rotation.y += 0.05;
-            cube[i].position.z = zOffset;
+		
+		var spacingMultiplier =  (Math.random() * (1.1 - 1)) + 1;
+		console.log(spacingMultiplier);
+		var colorChangeDeterminer = Math.floor(Math.random() * (100 - 0)) + 0;
+
+
+		count = 0;
+		for (i = -50 ; i < 50 ; i++){
+			for(j = -50; j < 50 ; j++){
+				cube[count].position.x = i*spacingMultiplier;
+				cube[count].position.y = j*spacingMultiplier;
+				cube[count].rotation.x += 0.05;
+				cube[count].rotation.y += 0.05;
+        
+        if(colorChangeDeterminer === 99){
+        	cube[count].position.z = zOffset[count];
+					color = Math.floor(Math.random() * (14 - 0)) + 0;
+        	cube[count].material.color.setHex( '0x'+colors[color]);	      	
+        }
+
+        count++;			
+			}
 		}
 
 		var timer = new Date().getTime() * 0.0005;
-		camera.rotation.y = 1 * Math.PI / 180
-        camera.position.z = (Math.cos( timer ) * 7)+10;
+		camera.rotation.y = camera.rotation.y+.01;
+		camera.rotation.x = camera.rotation.x-.01;
+    camera.position.z = (Math.cos( timer ) * 60)+60;
 
 		renderer.render(scene, camera);
 	};
