@@ -53,12 +53,7 @@ function draw(){
 
 	count++;
 	//
-
-
-	render(null,'blah', camera);
-}
-
-	var render = function (x, offset, camera) {
+	var render = function () {
 		requestAnimationFrame( render );
 		
 		console.log(offset);
@@ -81,3 +76,6 @@ function draw(){
 
 		renderer.render(scene, camera);
 	};
+
+	render(null,'blah');
+}
