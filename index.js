@@ -1,4 +1,5 @@
 var gate = require('./js/audio_gate');
+var draw = require('./js/visualizer');
 var rx = require('rx');
 var $ = require('jquery');
 var eventProducer = rx.Observable.interval(500);
@@ -14,15 +15,6 @@ $(document).ready(function(){
   var offset = [];
 
 
-  eventProducer.subscribe(function(onNext){
-	//callback();
-	for ( i = 0 ; i < 100 ; i++){
-		offset[i]= Math.floor(Math.random() * (10 - 0)) + 0;
-	}
-	console.log(offset[0]);
-	render(null,offset);
-
-	//console.log('event')
-  },undefined, undefined);
+  draw(eventProducer);
 });
 
